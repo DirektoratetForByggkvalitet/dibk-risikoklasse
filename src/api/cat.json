@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "title": "🔥 Hvilken risikoklasse?",
+    "footer": "Veiviser som hjelper deg å velge risikoklasse"
+  },
+  "schema": [
+    {
+      "id": "riskClass",
+      "type": "Page",
+      "heading": "Risikoklasse",
+      "children": [
+        {
+          "id": "lowFireRisk",
+          "property": "lowFireRisk",
+          "type": "Radio",
+          "heading": "Blir det liten brannfare i bygget?",
+          "options": [
+            {
+              "id": "lowFireRisk.yes",
+              "type": "Answer",
+              "heading": "Ja",
+              "value": true
+            },
+            {
+              "id": "lowFireRisk.no",
+              "type": "Answer",
+              "heading": "Nei",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "lowRiskResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 2",
+          "show": { "field": "lowFireRisk", "operator": "eq", "value": false }
+        },
+        {
+          "id": "sporadicUse",
+          "property": "sporadicUse",
+          "type": "Radio",
+          "heading": "Er bygget beregnet for sporadisk personopphold?",
+          "text": "<p>Byggverk beregnet for sporadisk personopphold er byggverk der personer av og til oppholder seg i kortere tid. Dette kan for eksempel være lagerbygning, skur eller garasje uten faste arbeidsplasser.</p>",
+          "show": { "field": "lowFireRisk", "operator": "required" },
+          "options": [
+            {
+              "id": "sporadicUse.yes",
+              "type": "Answer",
+              "heading": "Ja",
+              "value": true
+            },
+            {
+              "id": "sporadicUse.no",
+              "type": "Answer",
+              "heading": "Nei",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "sporadicResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 1",
+          "show": { "field": "sporadicUse", "operator": "eq", "value": true }
+        },
+        {
+          "id": "knownFireExits",
+          "property": "knownFireExits",
+          "type": "Radio",
+          "heading": "Kommer alle i bygget til å kjenne rømningsveier, og kan de ta seg ut på egenhånd?",
+          "show": { "field": "sporadicUse", "operator": "eq", "value": false },
+          "options": [
+            {
+              "id": "knownFireExits.yes",
+              "type": "Answer",
+              "heading": "Ja",
+              "value": true
+            },
+            {
+              "id": "knownFireExits.no",
+              "type": "Answer",
+              "heading": "Nei",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "overnightStay",
+          "property": "overnightStay",
+          "type": "Radio",
+          "heading": "Skal bygningen brukes til overnatting?",
+          "show": { "field": "sporadicUse", "operator": "eq", "value": false },
+          "options": [
+            {
+              "id": "overnightStay.yes",
+              "type": "Answer",
+              "heading": "Ja",
+              "value": true
+            },
+            {
+              "id": "overnightStay.no",
+              "type": "Answer",
+              "heading": "Nei",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "knowExitOvernightResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 4",
+          "show": {
+            "type": "and",
+            "clauses": [
+              { "field": "knownFireExits", "operator": "eq", "value": true },
+              { "field": "overnightStay", "operator": "eq", "value": true }
+            ]
+          }
+        },
+        {
+          "id": "knowExitNoOvernightResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 3",
+          "show": {
+            "type": "and",
+            "clauses": [
+              { "field": "knownFireExits", "operator": "eq", "value": true },
+              { "field": "overnightStay", "operator": "eq", "value": false }
+            ]
+          }
+        },
+        {
+          "id": "unknowExitOvernightResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 5",
+          "show": {
+            "type": "and",
+            "clauses": [
+              { "field": "knownFireExits", "operator": "eq", "value": false },
+              { "field": "overnightStay", "operator": "eq", "value": true }
+            ]
+          }
+        },
+        {
+          "id": "unknowExitNoOvernightResult",
+          "type": "Result",
+          "heading": "Velg risikoklasse 6",
+          "show": {
+            "type": "and",
+            "clauses": [
+              { "field": "knownFireExits", "operator": "eq", "value": false },
+              { "field": "overnightStay", "operator": "eq", "value": false }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
